@@ -98,10 +98,9 @@ def build(env):
         env.template("template.cpp.in", "template_{}.cpp".format(number + 1))
 ```
 
-The init step sets the module's name and its parent name. The prepare step
-then adds a `EnumerationOption` and makes the module available, if the repository option
-is set to `"special"`. Finally in the build step, a number of files are generated
-based on the option's content.
+The init step sets the module's name and its parent name. If the repository option is set to
+`"special"`, the prepare step then adds a `EnumerationOption` and makes the module available.
+Finally in the build step, a number of files are generated based on the option's content.
 
 The files are generated at the call-site of `lbuild build` which would then
 look something like this:
@@ -440,7 +439,7 @@ You can manually call this step via the `lbuild validate` command.
 
 The `build(env)` step is where the actual file generation happens. Here you can
 copy and generate files and folders from Jinja2 templates with the substitutions
-of you choice and the configuration of the modules. Each file operation is
+of your choice and the configuration of the modules. Each file operation is
 appended to a global build log, which you can also explicitly add metadata to.
 
 The `post_build(env)` step is meant for modules that need to generate
@@ -461,7 +460,7 @@ def init(module):
     module.format_description = custom_format_description
     module.format_short_description = custom_format_short_description
     # Add Jinja2 filters for this modules and all submodules
-    # NOTE: the filter is namespace with the repository! {{ 65 | repo.character }} -> "A"
+    # NOTE: the filter is namespaced with the repository! {{ 65 | repo.character }} -> "A"
     module.add_filter("repo.character", lambda number: chr(number))
 
 
